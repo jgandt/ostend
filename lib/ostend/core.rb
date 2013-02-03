@@ -14,10 +14,24 @@ module Ostend
     ostend_create_attributes( hash )
   end
 
+  private
+
   def ostend_create_attributes( hash )
     ostend_filterd_hash( hash ).each do |key,value|
+      temp_type = @ostend_attr_type
       self.instance_variable_set("@#{key}", value)
-      self.class.send("attr_#{@ostend_attr_type}", key)
+      # self.class.send("attr_#{@ostend_attr_type}", key)
+      # I'm basically trying to do the above.
+      #   However, there is an issue with the above send in that it modifies the core class
+      #   We really want to access the instance's single class like below.
+      #   I really want this to be simple but it end up being rediculous to modify the singleton class while honoring scoped variables
+      #   To get everything I needed into scope I have to retrieve the singleton class
+      #   and then class_eval on it.
+      #   Also, instance vars don't evaluate so I had to create a temporary value which will properly scope in the class_eval block.
+      #   Hlurg
+      (class << self; self; end).class_eval do
+        send("attr_#{temp_type}", key)
+      end
     end
   end
 
