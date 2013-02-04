@@ -3,6 +3,7 @@ module Ostend
     base.send(:attr_writer, :ostend_attr_type)
     base.send(:attr_writer, :ostend_attr_filter)
     base.send(:attr_writer, :ostend_strict)
+    # TODO : set ostend defaults here instead of in ostendify
   end
 
   def ostendify( hash )
