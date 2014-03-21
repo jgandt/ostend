@@ -126,4 +126,4 @@ Thoughts? Comments? Please let me know if you're using this! I'd love to hear ho
 
 .jpg
 
-https://www.codeship.io/projects/7c5c2590-604e-0131-bebf-6280b0be8524/status
+![Codeship build staus](https://www.codeship.io/projects/7c5c2590-604e-0131-bebf-6280b0be8524/status)
