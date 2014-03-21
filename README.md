@@ -125,3 +125,5 @@ Please Do Contribute! Normal [commit message and pull request rules apply.](http
 Thoughts? Comments? Please let me know if you're using this! I'd love to hear how and why you're using it!
 
 .jpg
+
+https://www.codeship.io/projects/7c5c2590-604e-0131-bebf-6280b0be8524/status
