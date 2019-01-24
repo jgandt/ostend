@@ -2,25 +2,25 @@
 
 #### And at some point we just want to:
 ```ruby
-hash = { :name => 'Twilight Sparkle', :enemy => 'Ahuizotl', :size => 'little' }
+hash = { name: 'Sugar Maple', leaf: 'tri-point', scientific_name: 'Acer saccharum', average_height: '33 meters' }
 
-my_correctly_sized_pony = SizedPony.new(hash)
+my_favorite_tree = DeciduousTree.new(hash)
 
-my_correctly_sized_pony.name
-  # => 'Twilight Sparkle'
+my_favorite_tree.name
+  # => 'Sugar Maple'
   
-my_correctly_sized_pony.enemy = 'Queen Chrysalis'
-  # => 'Queen Chrysalis'
+my_favorite_tree.leaf = 'pseudo fractal tri-point'
+  # => 'pseudo fractal tri-point'
 ```
 
-We can use OpenStruct, but then we can't directly inherit from the real class!
+There are some way to do this with standard lib. But they involve cumbersome boilerplate.
 
-### Why in Ponyland is that so hard?
+### But that seems painful
 
-# It's Not Hard
+# It doesn't have to be painful!
 
 ```ruby
-class SizedPony < Pony
+class DeciduousTree < Tree
   include Ostend
   
   def initialize(hash)
@@ -31,35 +31,35 @@ end
 
 Two new lines. That's it! And nothing is forced on you.
 
-If you don't want to instantiate the variables in new(), you don't have to. You can call ostendify() anywhere you like.
+If you don't want to instantiate the variables in new(), you don't have to. You can call `ostendify()` anywhere you like.
 
 ## There's Always More
 
-I have added a few additional features:
+There are a few additional features:
 #### Accessor Type control
 
 By default, Ostend creates attr_accessors.
 
-You say you'd prefer writers (or readers)? Set @ostend_attr_type before you call ostendify()
+You say you'd prefer writers (or readers)? Set `@ostend_attr_type` before you call `ostendify()`
 ```ruby
-  pony.ostend_attr_type = :writer # or = :reader
-  pony.ostendify( hash )
+  tree.ostend_attr_type = :writer # or = :reader
+  tree.ostendify( hash )
   
-  pony.size
+  tree.size
     # => NoMethodError
 ```
 
 #### Attribute Filter
 
-Whitelist hash keys for attributes that you don't want assigned
-You don't want your ponies to have enemies? Set @ostend_attr_filter before you call ostendify()
+Whitelist hash keys for attributes that you don't want assigned!
+You don't want your trees to have a leaf? Set `@ostend_attr_filter` before you call `ostendify()`
 
 ```ruby
-  pony.ostend_attr_filter = [:name, :size]
+  tree.ostend_attr_filter = [:name, :scientific_name]
   # Now Ostend happily and silenty drops the other hash keys
-  pony.ostendify( hash )
+  tree.ostendify( hash )
   
-  pony.enemy
+  tree.leaf
     # => NoMethodError
 ```
 
@@ -68,12 +68,12 @@ You don't want your ponies to have enemies? Set @ostend_attr_filter before you c
 Lastly, you can force exceptions if you don't want arguments other that what you specified in the filter.
 
 ```ruby
-  pony.ostend_attr_filter = [:name, :size]
-  pony.ostend_strict      = true
+  tree.ostend_attr_filter = [:name, :average_height]
+  tree.ostend_strict      = true
   # Now Ostend throws a hissy fit when you attempt instantiaion
   
-  pony.ostendify( hash )
-    # => Exception :: The following are not allowed attributes: :enemies
+  tree.ostendify( hash )
+    # => Exception :: The following are not allowed attributes: :scientific_name, :leaf
 ```
 
 ### Still More
@@ -114,7 +114,7 @@ I have a few ideas for expansion.
 
 1. Enabling class level accessor creation
 1. Create the Ostend variable as class_level variables to allow easier control over the entire class
-1. I could start to get into crazy, ActiveRecord relation assignments
+1. We could start to get into crazy, ActiveRecord relation assignments
 
 However, I'm not sure how far I will go as it's current form is just about the size I want it to be.
 
@@ -123,7 +123,3 @@ However, I'm not sure how far I will go as it's current form is just about the s
 Please Do Contribute! Normal [commit message and pull request rules apply.](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
 
 Thoughts? Comments? Please let me know if you're using this! I'd love to hear how and why you're using it!
-
-.jpg
-
-![Codeship build staus](https://www.codeship.io/projects/7c5c2590-604e-0131-bebf-6280b0be8524/status)
